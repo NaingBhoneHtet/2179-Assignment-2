@@ -1,0 +1,208 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Malaysia's River Monitoring Network",
+  "description": "Distribution of river water quality monitoring stations across Malaysia",
+  "width": 600,
+  "height": 350,
+  "projection": {
+    "type": "mercator",
+    "scale": 1800,
+    "center": [
+      109.5,
+      4.0
+    ]
+  },
+  "layer": [
+    {
+      "data": {
+          "url": "malaysia.geojson",
+          "format": {"type": "json", "property": "features"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#ecf0f1",
+        "stroke": "#bdc3c7",
+        "strokeWidth": 1
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "state": "Johor",
+            "lat": 1.9344,
+            "lon": 103.3587,
+            "stations": 89,
+            "key_river": "Johor River"
+          },
+          {
+            "state": "Selangor",
+            "lat": 3.0738,
+            "lon": 101.5183,
+            "stations": 120,
+            "key_river": "Klang River"
+          },
+          {
+            "state": "Perak",
+            "lat": 4.7679,
+            "lon": 100.9497,
+            "stations": 76,
+            "key_river": "Perak River"
+          },
+          {
+            "state": "Pahang",
+            "lat": 3.5383,
+            "lon": 102.5714,
+            "stations": 65,
+            "key_river": "Pahang River"
+          },
+          {
+            "state": "Kelantan",
+            "lat": 5.5487,
+            "lon": 102.2649,
+            "stations": 45,
+            "key_river": "Kelantan River"
+          },
+          {
+            "state": "Terengganu",
+            "lat": 4.8156,
+            "lon": 103.136,
+            "stations": 38,
+            "key_river": "Terengganu River"
+          },
+          {
+            "state": "Kedah",
+            "lat": 5.9596,
+            "lon": 100.576,
+            "stations": 42,
+            "key_river": "Muda River"
+          },
+          {
+            "state": "Penang",
+            "lat": 5.4141,
+            "lon": 100.3288,
+            "stations": 35,
+            "key_river": "Pinang River"
+          },
+          {
+            "state": "Negeri Sembilan",
+            "lat": 2.7259,
+            "lon": 102.252,
+            "stations": 28,
+            "key_river": "Linggi River"
+          },
+          {
+            "state": "Malacca",
+            "lat": 2.2008,
+            "lon": 102.2438,
+            "stations": 22,
+            "key_river": "Malacca River"
+          },
+          {
+            "state": "Perlis",
+            "lat": 6.4449,
+            "lon": 100.2045,
+            "stations": 12,
+            "key_river": "Perlis River"
+          },
+          {
+            "state": "Sabah",
+            "lat": 5.4204,
+            "lon": 116.7968,
+            "stations": 85,
+            "key_river": "Kinabatangan"
+          },
+          {
+            "state": "Sarawak",
+            "lat": 2.5517,
+            "lon": 112.9477,
+            "stations": 95,
+            "key_river": "Rajang River"
+          },
+          {
+            "state": "Kuala Lumpur",
+            "lat": 3.139,
+            "lon": 101.6869,
+            "stations": 40,
+            "key_river": "Klang River"
+          }
+        ]
+      },
+      "mark": {
+        "type": "circle",
+        "tooltip": true
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "size": {
+          "field": "stations",
+          "type": "quantitative",
+          "title": "Monitoring Stations",
+          "scale": {
+            "range": [
+              80,
+              400
+            ]
+          }
+        },
+        "color": {
+          "value": "#2980b9"
+        },
+        "tooltip": [
+          {
+            "field": "state",
+            "type": "nominal",
+            "title": "State"
+          },
+          {
+            "field": "key_river",
+            "type": "nominal",
+            "title": "Key River"
+          },
+          {
+            "field": "stations",
+            "type": "quantitative",
+            "title": "Stations"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "lat": 3.139,
+            "lon": 101.6869,
+            "text": "Kuala Lumpur"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "dy": -15,
+        "fontSize": 11,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "text"
+        }
+      }
+    }
+  ]
+}

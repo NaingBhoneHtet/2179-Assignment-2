@@ -1,0 +1,65 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Where Does River Pollution Come From?",
+  "description": "Daily pollutant load by source and type (tons/day)",
+  "width": 600,
+  "height": 350,
+  "data": {
+    "url": "pollutant_source_long.csv"
+  },
+  "mark": {
+    "type": "bar",
+    "tooltip": true
+  },
+  "encoding": {
+    "x": {
+      "field": "source",
+      "type": "nominal",
+      "title": "Pollution Source",
+      "axis": {
+        "labelAngle": -30
+      }
+    },
+    "y": {
+      "field": "tons_per_day",
+      "type": "quantitative",
+      "title": "Tons per Day"
+    },
+    "xOffset": {
+      "field": "pollutant"
+    },
+    "color": {
+      "field": "pollutant",
+      "type": "nominal",
+      "title": "Pollutant Type",
+      "scale": {
+        "domain": [
+          "BOD",
+          "SS",
+          "NH3N"
+        ],
+        "range": [
+          "#3498db",
+          "#9b59b6",
+          "#e67e22"
+        ]
+      }
+    },
+    "tooltip": [
+      {
+        "field": "source",
+        "type": "nominal"
+      },
+      {
+        "field": "pollutant",
+        "type": "nominal"
+      },
+      {
+        "field": "tons_per_day",
+        "type": "quantitative",
+        "format": ".2f",
+        "title": "Tons/Day"
+      }
+    ]
+  }
+}

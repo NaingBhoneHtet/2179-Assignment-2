@@ -1,0 +1,123 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "The BOD Rollercoaster: 22 Years of Basin Quality",
+  "description": "Percentage of basins classified as clean vs polluted by BOD, 2000-2021",
+  "width": 600,
+  "height": 350,
+  "data": {
+    "url": "basin_bod_timeline.csv"
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "area",
+        "line": true,
+        "point": true,
+        "tooltip": true,
+        "opacity": 0.6
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative",
+          "title": "Year",
+          "scale": {
+            "domain": [
+              2000,
+              2021
+            ]
+          }
+        },
+        "y": {
+          "field": "clean_pct",
+          "type": "quantitative",
+          "title": "% of Basins",
+          "scale": {
+            "domain": [
+              0,
+              100
+            ]
+          }
+        },
+        "color": {
+          "value": "#27ae60"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "area",
+        "line": true,
+        "point": true,
+        "tooltip": true,
+        "opacity": 0.6
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "polluted_pct",
+          "type": "quantitative"
+        },
+        "color": {
+          "value": "#e74c3c"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#95a5a6",
+        "strokeDash": [
+          4,
+          4
+        ]
+      },
+      "encoding": {
+        "x": {
+          "datum": 2013
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "text": "2013: Crisis Peak",
+        "color": "#c0392b",
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "align": "left",
+        "dx": 5
+      },
+      "encoding": {
+        "x": {
+          "datum": 2013
+        },
+        "y": {
+          "datum": 95
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "text": "2021: Recovery",
+        "color": "#27ae60",
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "align": "right",
+        "dx": -5
+      },
+      "encoding": {
+        "x": {
+          "datum": 2021
+        },
+        "y": {
+          "datum": 95
+        }
+      }
+    }
+  ]
+}

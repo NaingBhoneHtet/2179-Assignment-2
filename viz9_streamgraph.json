@@ -1,0 +1,92 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "The Long Road to Clean Water: 22-Year Journey",
+  "description": "Percentage of clean basins by parameter over time, 2000-2021",
+  "width": 600,
+  "height": 350,
+  "data": {
+    "url": "basin_clean_timeline.csv"
+  },
+  "transform": [
+    {
+      "fold": [
+        "bod5_clean",
+        "ss_clean",
+        "nh3n_clean"
+      ],
+      "as": [
+        "parameter",
+        "clean_pct"
+      ]
+    }
+  ],
+  "mark": {
+    "type": "area",
+    "line": true,
+    "point": true,
+    "tooltip": true,
+    "opacity": 0.7
+  },
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "quantitative",
+      "title": "Year",
+      "scale": {
+        "domain": [
+          2000,
+          2021
+        ]
+      }
+    },
+    "y": {
+      "field": "clean_pct",
+      "type": "quantitative",
+      "title": "% of Basins Classified as Clean",
+      "scale": {
+        "domain": [
+          0,
+          100
+        ]
+      }
+    },
+    "color": {
+      "field": "parameter",
+      "type": "nominal",
+      "title": "Parameter",
+      "scale": {
+        "domain": [
+          "bod5_clean",
+          "ss_clean",
+          "nh3n_clean"
+        ],
+        "range": [
+          "#3498db",
+          "#9b59b6",
+          "#e67e22"
+        ]
+      },
+      "legend": {
+        "labelExpr": "datum.label == 'bod5_clean' ? 'BOD' : datum.label == 'ss_clean' ? 'Suspended Solids' : 'Ammonia Nitrogen'"
+      }
+    },
+    "tooltip": [
+      {
+        "field": "year",
+        "type": "quantitative",
+        "title": "Year"
+      },
+      {
+        "field": "parameter",
+        "type": "nominal",
+        "title": "Parameter"
+      },
+      {
+        "field": "clean_pct",
+        "type": "quantitative",
+        "format": ".1f",
+        "title": "% Clean"
+      }
+    ]
+  }
+}

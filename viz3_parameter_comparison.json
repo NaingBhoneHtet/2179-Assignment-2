@@ -1,0 +1,73 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "The Hidden Problem: Ammonia Lingers While BOD & SS Recover",
+  "description": "Comparing clean water percentages across three key parameters, 2018-2022",
+  "width": 150,
+  "height": 180,
+  "data": {
+    "url": "parameters_comparison.csv"
+  },
+  "transform": [
+    {
+      "filter": "datum.status == 'Clean'"
+    }
+  ],
+  "mark": {
+    "type": "line",
+    "point": true,
+    "strokeWidth": 3
+  },
+  "encoding": {
+    "column": {
+      "field": "parameter",
+      "type": "nominal",
+      "title": "Water Quality Parameter",
+      "sort": [
+        "BOD",
+        "SS",
+        "NH3N"
+      ]
+    },
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "title": "Year",
+      "axis": {
+        "labelAngle": 0
+      }
+    },
+    "y": {
+      "field": "percentage",
+      "type": "quantitative",
+      "title": "% Clean Basins",
+      "scale": {
+        "domain": [
+          0,
+          100
+        ]
+      }
+    },
+    "color": {
+      "condition": {
+        "test": "datum.parameter == 'NH3N'",
+        "value": "#e74c3c"
+      },
+      "value": "#27ae60"
+    },
+    "tooltip": [
+      {
+        "field": "year",
+        "type": "ordinal"
+      },
+      {
+        "field": "parameter",
+        "type": "nominal"
+      },
+      {
+        "field": "percentage",
+        "type": "quantitative",
+        "format": ".0f"
+      }
+    ]
+  }
+}

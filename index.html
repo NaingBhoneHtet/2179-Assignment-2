@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malaysia's River Water Quality: A Story of Crisis and Recovery</title>
+
+    <!-- Pure.css for layout -->
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.1.0/build/pure-min.css">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.1.0/build/grids-responsive-min.css">
+
+    <!-- Vega-Lite -->
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-clean: #2ecc71;
+            --color-slightly: #f39c12;
+            --color-polluted: #e74c3c;
+            --color-dark: #2c3e50;
+            --color-light: #ecf0f1;
+            --color-accent: #2980b9;
+            --max-content: 850px;
+            --viz-width: 750px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        h1, h2, h3 {
+            font-family: 'Merriweather', serif;
+            color: var(--color-dark);
+            font-weight: 700;
+        }
+
+        h1 { font-size: 2.8em; line-height: 1.2; margin-bottom: 0.3em; }
+        h2 { font-size: 1.9em; margin-top: 2.5em; margin-bottom: 0.6em; border-left: 5px solid var(--color-accent); padding-left: 18px; }
+        h3 { font-size: 1.3em; margin-top: 1.5em; color: var(--color-accent); }
+
+        p { font-size: 1.05em; max-width: 65ch; margin-bottom: 1.2em; }
+
+        .lead {
+            font-size: 1.25em;
+            font-weight: 300;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, #1a5276 0%, #2980b9 50%, #3498db 100%);
+            color: white;
+            padding: 70px 20px 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .hero h1 { color: white; font-size: 3em; margin-bottom: 0.2em; position: relative; z-index: 1; }
+        .hero .subtitle { font-size: 1.3em; font-weight: 300; opacity: 0.9; position: relative; z-index: 1; }
+        .hero .meta { margin-top: 25px; font-size: 0.9em; opacity: 0.7; position: relative; z-index: 1; }
+
+        /* ===== KEY STAT ===== */
+        .key-stat {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin: -35px auto 40px;
+            max-width: 700px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .key-stat .number { font-size: 3.5em; font-weight: 900; color: var(--color-clean); font-family: 'Merriweather', serif; line-height: 1; }
+        .key-stat .label { font-size: 1.1em; color: #666; margin-top: 10px; }
+
+        /* ===== CONTENT ===== */
+        .content {
+            max-width: var(--max-content);
+            margin: 0 auto;
+            padding: 0 25px 60px;
+        }
+
+        /* ===== VISUALIZATION ===== */
+        .viz-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px auto;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            max-width: var(--viz-width);
+            overflow: hidden;
+        }
+
+        .viz-container h3 { margin-top: 0; margin-bottom: 15px; }
+
+        .viz-caption {
+            font-size: 0.9em;
+            color: #666;
+            font-style: italic;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        /* ===== CALLOUT ===== */
+        .callout {
+            background: #fff3cd;
+            border-left: 4px solid #f39c12;
+            padding: 18px 22px;
+            margin: 25px auto;
+            border-radius: 0 8px 8px 0;
+            max-width: var(--viz-width);
+        }
+
+        .callout.crisis { background: #f8d7da; border-left-color: #e74c3c; }
+        .callout.success { background: #d4edda; border-left-color: #2ecc71; }
+        .callout h4 { margin-top: 0; color: var(--color-dark); font-size: 1.1em; }
+
+        /* ===== TWO COLUMN - FIXED ===== */
+        .two-col {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: var(--viz-width);
+            margin: 25px auto;
+            align-items: stretch;
+        }
+
+        .two-col > .viz-container {
+            flex: 1 1 45%;
+            min-width: 280px;
+            max-width: 100%;
+            margin: 0;
+        }
+
+        .two-col > .text-block {
+            flex: 1 1 45%;
+            min-width: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .two-col > div:not(.viz-container):not(.text-block) {
+            flex: 1 1 45%;
+            min-width: 280px;
+        }
+
+        .two-col > .text-block p { margin-bottom: 0.8em; }
+        .two-col > .text-block p:last-child { margin-bottom: 0; }
+
+        /* ===== TEXT BLOCK ===== */
+        .text-block {
+            max-width: 65ch;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== SCROLL ===== */
+        .scroll-indicator {
+            text-align: center;
+            margin: 15px 0 30px;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        /* ===== FOOTER - FIXED ===== */
+        .footer {
+            background: var(--color-dark);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .footer > * {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 65ch;
+        }
+
+        .footer p { 
+            margin-bottom: 0.8em; 
+            margin-left: auto; 
+            margin-right: auto;
+        }
+
+        .footer a { color: #3498db; }
+
+        .footer .footer-meta {
+            font-size: 0.85em;
+            opacity: 0.7;
+            margin-top: 20px;
+        }
+
+        .footer .footer-license {
+            font-size: 0.8em;
+            opacity: 0.5;
+            margin-top: 20px;
+        }
+
+        /* ===== VEGA EMBED FIX ===== */
+        .vega-embed {
+            margin: 0 auto !important;
+            display: flex !important;
+            justify-content: center !important;
+        }
+
+        .vega-embed canvas, .vega-embed svg {
+            margin: 0 auto !important;
+            max-width: 100% !important;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2em; }
+            h2 { font-size: 1.5em; }
+            .key-stat .number { font-size: 2.5em; }
+            .two-col { flex-direction: column; }
+            .two-col > .viz-container,
+            .two-col > .text-block { flex: 1 1 100%; min-width: unset; }
+            .viz-container { padding: 15px; }
+            .content { padding: 0 15px 40px; }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <h1>Malaysia's River Water Quality</h1>
+                <p class="subtitle">A Story of Crisis, Recovery, and Hidden Challenges</p>
+        </div>
+    </section>
+
+    <!-- KEY STAT -->
+    <div class="key-stat">
+        <div class="number">74%</div>
+        <div class="label">of Malaysia's river monitoring stations were classified as <strong>clean</strong> in 2022 — up from just 56% in 2018</div>
+    </div>
+
+    <div class="scroll-indicator">▼ Scroll to explore the full story</div>
+
+    <!-- MAIN CONTENT -->
+    <div class="content">
+
+        <div class="text-block">
+            <p class="lead">
+                Every day, millions of Malaysians turn on their taps expecting clean water. But behind that simple act lies a complex story of environmental policy, industrial pressure, and decades of effort to keep our rivers alive. This visualisation explores how Malaysia's rivers have changed over 22 years — and why one pollutant remains stubbornly difficult to control.
+            </p>
+        </div>
+
+        <!-- SECTION 1 -->
+        <h2>1. The Big Picture: Rivers Are Getting Cleaner</h2>
+
+        <div class="text-block">
+            <p>Since 2018, Malaysia has made remarkable progress in river water quality. The percentage of clean monitoring stations rose from 56% to 74% in just five years. Meanwhile, heavily polluted stations dropped from 8% to just 4%.</p>
+        </div>
+
+        <div class="viz-container">
+            <div id="viz1"></div>
+            <p class="viz-caption">Figure 1: Overall river water quality trends at 638–672 monitoring stations (2018–2022). Source: WEPA Database, Department of Environment Malaysia.</p>
+        </div>
+
+        <div class="text-block">
+            <p>This improvement reflects significant government investment in sewage treatment infrastructure and stricter enforcement of environmental regulations. However, the headline numbers tell only part of the story.</p>
+        </div>
+
+        <!-- SECTION 2 -->
+        <h2>2. The BOD Crisis: When Rivers Hit Rock Bottom</h2>
+
+        <div class="callout crisis">
+            <h4>🚨 The Darkest Period: 2013–2016</h4>
+            <p>Between 2013 and 2016, <strong>zero</strong> river basins were classified as clean by BOD standards. By 2016, an alarming <strong>92%</strong> of basins were polluted. This was the worst water quality crisis in Malaysia's modern history.</p>
+        </div>
+
+        <div class="text-block">
+            <p>Biochemical Oxygen Demand (BOD) measures how much oxygen organisms need to break down organic matter. High BOD means rivers are suffocating from organic pollution — typically sewage, agricultural runoff, and industrial waste.</p>
+        </div>
+
+        <div class="viz-container">
+            <div id="viz7"></div>
+            <p class="viz-caption">Figure 2: BOD water quality at basin level (2000–2021), showing the dramatic collapse and recovery. The red vertical line marks 2013, the crisis peak.</p>
+        </div>
+
+        <div class="text-block">
+            <p>What caused this crisis? Rapid urbanisation without matching sewage infrastructure, expansion of pig farming in unregulated areas, and industrial discharge into waterways. The recovery began after the government launched aggressive river rehabilitation programs and cracked down on illegal dumping.</p>
+        </div>
+
+        <div class="viz-container">
+            <div id="viz10"></div>
+            <p class="viz-caption">Figure 3: Heatmap showing pollution intensity across all three parameters over 22 years. Darker red = more polluted basins. Notice the BOD crisis band (2013–2016).</p>
+        </div>
+
+        <!-- SECTION 3 -->
+        <h2>3. The Hidden Problem: Ammonia Won't Budge</h2>
+
+        <div class="text-block">
+            <p>While BOD and Suspended Solids (SS) have improved dramatically, Ammonia Nitrogen (NH3N) tells a different story. In 2022, only 47% of basins were clean by NH3N standards — far below the 78% achieved for BOD.</p>
+        </div>
+
+        <div class="callout">
+            <h4>⚠️ Why Should Malaysians Care About Ammonia?</h4>
+            <p>High ammonia levels are toxic to fish and aquatic life. In drinking water, ammonia reacts with chlorine disinfectants to form harmful byproducts. Unlike BOD (which mainly reflects organic waste), ammonia points specifically to <strong>sewage and animal waste</strong> — particularly from pig farms and inadequate sewage treatment.</p>
+        </div>
+
+        <div class="viz-container">
+            <div id="viz3"></div>
+            <p class="viz-caption">Figure 4: Comparing clean basin percentages across BOD, SS, and NH3N (2018–2022).</p>
+        </div>
+
+        <div class="viz-container">
+            <div id="viz8"></div>
+            <p class="viz-caption">Figure 5: In 2022, NH3N still left over half of basins not fully clean.</p>
+        </div>
+
+        <div class="text-block">
+            <p>The gap is striking: while BOD and SS have largely recovered, NH3N improvement has been slower and less consistent. This suggests that sewage treatment systems — while better than before — still struggle with nitrogen removal, and pig farming remains a persistent challenge.</p>
+        </div>
+
+        <!-- SECTION 4 -->
+        <h2>4. Where Does It All Come From?</h2>
+
+        <div class="text-block">
+            <p>To solve a problem, you must understand its source. Malaysia's river pollution comes from five major sources, but two dominate: sewage treatment systems and pig farming account for over <strong>86%</strong> of all measured pollutant loads.</p>
+        </div>
+
+        <div class="viz-container">
+            <div id="viz5"></div>
+            <p class="viz-caption">Figure 6: Total pollutant load by source (combined BOD + SS + NH3N, tons/day).</p>
+        </div>
+
+        <div class="viz-container">
+            <div id="viz4"></div>
+            <p class="viz-caption">Figure 7: Breakdown by pollutant type. Pig farming dominates Suspended Solids (SS), while sewage treatment systems lead in BOD and NH3N.</p>
+        </div>
+
+        <div class="callout success">
+            <h4>💡 Key Insight</h4>
+            <p><strong>Sewage treatment systems</strong> contribute 46% of all pollution but also represent the greatest opportunity for improvement. Modernising these facilities with nitrogen-removal technology could dramatically improve NH3N readings.</p>
+        </div>
+
+        <div class="viz-container">
+            <div id="viz12"></div>
+            <p class="viz-caption">Figure 8: Comparing total pollution volume vs consistency across parameters for each source.</p>
+        </div>
+
+        <!-- SECTION 5 -->
+        <h2>5. Malaysia's River Monitoring Network</h2>
+
+        <div class="text-block">
+            <p>Malaysia monitors its rivers through a network of over 670 stations spread across all states. The highest concentration is in Selangor and Sarawak, reflecting both population density and river system complexity.</p>
+        </div>
+
+        <div class="viz-container">
+            <div id="viz6"></div>
+            <p class="viz-caption">Figure 9: Map of Malaysia showing river monitoring station distribution by state. Circle size = number of stations. Data: Department of Environment Malaysia.</p>
+        </div>
+
+        <div class="text-block">
+            <p>The Klang River (flowing through Kuala Lumpur and Selangor) is perhaps Malaysia's most closely watched waterway, with 120 monitoring stations in the state alone. It has historically been one of the most polluted rivers but has shown significant improvement in recent years.</p>
+        </div>
+
+        <!-- SECTION 6 -->
+        <h2>6. The 22-Year Journey: From Bad to Worse to Better</h2>
+
+        <div class="text-block">
+            <p>Looking back to 2000, Malaysia's rivers have been on a rollercoaster. The early 2000s saw steady improvement, followed by a devastating decline from 2009–2016, and now a strong recovery.</p>
+        </div>
+
+        <div class="viz-container">
+            <div id="viz9"></div>
+            <p class="viz-caption">Figure 10: 22-year timeline of clean basin percentages by parameter. Notice how all three parameters follow similar patterns but with different magnitudes.</p>
+        </div>
+
+        <div class="viz-container">
+            <div id="viz2"></div>
+            <p class="viz-caption">Figure 11: Detailed BOD timeline at basin level with crisis annotations (2000–2021).</p>
+        </div>
+
+        <!-- SECTION 7 - FIXED LAYOUT -->
+        <h2>7. 2022 at a Glance</h2>
+
+        <div class="viz-container" style="max-width: 500px;">
+            <div id="viz11"></div>
+            <p class="viz-caption">Figure 12: Overall water quality distribution in 2022.</p>
+        </div>
+
+        <div class="text-block">
+            <p>In 2022, three-quarters of Malaysia's river monitoring stations reported clean water. Only 4% were heavily polluted. This is a remarkable turnaround from the dark days of 2013–2016.</p>
+            <p>However, the work isn't finished. The remaining 22% of slightly polluted stations and the persistent ammonia problem remind us that river conservation requires ongoing vigilance.</p>
+        </div>
+
+        <!-- CONCLUSION -->
+        <h2>Conclusion: Cleaner Rivers, But the Work Continues</h2>
+
+        <div class="text-block">
+            <p>Malaysia's river water quality story is one of resilience. From the depths of the 2013–2016 crisis, the country has rebuilt its river health through better sewage infrastructure, stricter enforcement, and public awareness.</p>
+            <p>Yet the data reveals a critical unfinished task: ammonia nitrogen. Until sewage treatment systems are upgraded with nitrogen-removal technology and pig farming waste is better managed, a significant portion of Malaysia's rivers will remain compromised.</p>
+        </div>
+
+    </div>
+
+    <!-- FOOTER - FIXED -->
+    <div class="footer">
+        <p><strong>Malaysia's River Water Quality: A Data Visualisation</strong></p>
+        <p>Created by Naing Bhone Htet for FIT2179 Data Visualisation Assignment 2, Monash University Malaysia<br>
+        May 2026 </p>
+
+        <p class="footer-meta">
+            <strong>Data Sources:</strong><br>
+            • <a href="https://wepa-db.net/wp-content/uploads/2025/03/WEPA_Outlook2024_Malaysia.pdf">WEPA Outlook2024 Malaysia</a><br>
+            • <a href="https://data.gov.my/data-catalogue/water_pollution_basin">Water Pollution Basin Data (2000–2021)</a><br><br>
+            <strong>Acknowledgements:</strong> This visualisation was created with Vega-Lite and Pure.css. 
+            Text was refined with AI assistance. All data is publicly available from government sources.
+        </p>
+
+        <p class="footer-license">Released under CC BY-SA 4.0 | Not for commercial use without permission</p>
+    </div>
+
+    <!-- VEGA-LITE SCRIPTS -->
+    <script>
+        const embedOpts = {actions: false, renderer: 'canvas'};
+
+        vegaEmbed('#viz1', 'viz1_overall_trend.json', embedOpts).catch(console.error);
+        vegaEmbed('#viz2', 'viz2_bod_crisis.json', embedOpts).catch(console.error);
+        vegaEmbed('#viz3', 'viz3_parameter_comparison.json', embedOpts).catch(console.error);
+        vegaEmbed('#viz4', 'viz4_pollution_sources.json', embedOpts).catch(console.error);
+        vegaEmbed('#viz5', 'viz5_source_totals.json', embedOpts).catch(console.error);
+        vegaEmbed('#viz6', 'viz6_malaysia_map.json', embedOpts).catch(console.error);
+        vegaEmbed('#viz7', 'viz7_basin_timeline.json', embedOpts).catch(console.error);
+        vegaEmbed('#viz8', 'viz8_diverging_bar.json', embedOpts).catch(console.error);
+        vegaEmbed('#viz9', 'viz9_streamgraph.json', embedOpts).catch(console.error);
+        vegaEmbed('#viz10', 'viz10_heatmap.json', embedOpts).catch(console.error);
+        vegaEmbed('#viz11', 'viz11_gauge.json', embedOpts).catch(console.error);
+        vegaEmbed('#viz12', 'viz12_scatter.json', embedOpts).catch(console.error);
+    </script>
+
+</body>
+</html>

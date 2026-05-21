@@ -1,0 +1,63 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Pollution Sources: Volume vs Consistency",
+  "description": "Total pollution load vs average across parameters",
+  "width": 500,
+  "height": 350,
+  "data": {
+    "url": "source_scatter.csv"
+  },
+  "mark": {
+    "type": "point",
+    "filled": true,
+    "size": 200,
+    "tooltip": true
+  },
+  "encoding": {
+    "x": {
+      "field": "avg_per_param",
+      "type": "quantitative",
+      "title": "Average Tons/Day per Parameter"
+    },
+    "y": {
+      "field": "total",
+      "type": "quantitative",
+      "title": "Total Tons/Day (All Parameters)"
+    },
+    "color": {
+      "field": "source",
+      "type": "nominal",
+      "title": "Source"
+    },
+    "tooltip": [
+      {
+        "field": "source",
+        "type": "nominal"
+      },
+      {
+        "field": "total",
+        "type": "quantitative",
+        "format": ".1f",
+        "title": "Total Tons/Day"
+      },
+      {
+        "field": "bod_tons_per_day",
+        "type": "quantitative",
+        "format": ".1f",
+        "title": "BOD"
+      },
+      {
+        "field": "ss_tons_per_day",
+        "type": "quantitative",
+        "format": ".1f",
+        "title": "SS"
+      },
+      {
+        "field": "nh3n_tons_per_day",
+        "type": "quantitative",
+        "format": ".1f",
+        "title": "NH3N"
+      }
+    ]
+  }
+}

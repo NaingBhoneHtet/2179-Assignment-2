@@ -1,0 +1,130 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "The BOD Crisis: From 0% to 86% Clean in 8 Years",
+  "description": "BOD water quality trends showing the dramatic recovery from 2013-2021",
+  "width": 600,
+  "height": 350,
+  "data": {
+    "url": "basin_wide.csv"
+  },
+  "transform": [
+    {
+      "filter": "datum.measure == 'bod5'"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "point": true,
+        "strokeWidth": 3
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative",
+          "title": "Year",
+          "scale": {
+            "domain": [
+              2000,
+              2021
+            ]
+          }
+        },
+        "y": {
+          "field": "clean",
+          "type": "quantitative",
+          "title": "% of Basins Classified as Clean",
+          "scale": {
+            "domain": [
+              0,
+              100
+            ]
+          }
+        },
+        "color": {
+          "value": "#27ae60"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "line",
+        "point": true,
+        "strokeWidth": 3
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "polluted",
+          "type": "quantitative"
+        },
+        "color": {
+          "value": "#c0392b"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "line",
+        "point": true,
+        "strokeDash": [
+          4,
+          4
+        ],
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "slightly_polluted",
+          "type": "quantitative"
+        },
+        "color": {
+          "value": "#f39c12"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#e74c3c",
+        "strokeWidth": 2,
+        "strokeDash": [
+          8,
+          4
+        ]
+      },
+      "encoding": {
+        "x": {
+          "datum": 2013
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "text": "Crisis Peak: 0% Clean",
+        "color": "#c0392b",
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "align": "left",
+        "dx": 5
+      },
+      "encoding": {
+        "x": {
+          "datum": 2013
+        },
+        "y": {
+          "datum": 10
+        }
+      }
+    }
+  ]
+}

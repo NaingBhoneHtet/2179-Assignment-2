@@ -1,0 +1,64 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "2022 at a Glance: 74% of Rivers Are Clean",
+  "description": "Overall river water quality status in 2022",
+  "width": 300,
+  "height": 300,
+  "data": {
+    "url": "gauge_2022.csv"
+  },
+  "mark": {
+    "type": "arc",
+    "innerRadius": 60,
+    "outerRadius": 120,
+    "tooltip": true
+  },
+  "encoding": {
+    "theta": {
+      "field": "percentage",
+      "type": "quantitative",
+      "scale": {
+        "domain": [
+          0,
+          100
+        ]
+      },
+      "stack": true
+    },
+    "color": {
+      "field": "status",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Clean",
+          "Slightly Polluted",
+          "Polluted"
+        ],
+        "range": [
+          "#2ecc71",
+          "#f39c12",
+          "#e74c3c"
+        ]
+      },
+      "title": "Status"
+    },
+    "order": {
+      "field": "order"
+    },
+    "tooltip": [
+      {
+        "field": "status",
+        "type": "nominal"
+      },
+      {
+        "field": "percentage",
+        "type": "quantitative",
+        "format": ".0f",
+        "title": "%"
+      }
+    ]
+  },
+  "view": {
+    "stroke": null
+  }
+}

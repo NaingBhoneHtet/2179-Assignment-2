@@ -1,0 +1,76 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Malaysia's River Quality Improving Steadily",
+  "description": "Percentage of river monitoring stations by water quality status, 2018-2022",
+  "width": 600,
+  "height": 350,
+  "data": {
+    "url": "overall_trend_long.csv"
+  },
+  "mark": {
+    "type": "area",
+    "line": true,
+    "point": true,
+    "tooltip": true
+  },
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "title": "Year",
+      "axis": {
+        "labelAngle": 0
+      }
+    },
+    "y": {
+      "field": "percentage",
+      "type": "quantitative",
+      "title": "Percentage of Stations (%)",
+      "scale": {
+        "domain": [
+          0,
+          100
+        ]
+      }
+    },
+    "color": {
+      "field": "status",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Clean",
+          "Slightly Polluted",
+          "Polluted"
+        ],
+        "range": [
+          "#2ecc71",
+          "#f39c12",
+          "#e74c3c"
+        ]
+      },
+      "title": "Water Quality Status"
+    },
+    "order": {
+      "field": "status",
+      "sort": "descending"
+    },
+    "tooltip": [
+      {
+        "field": "year",
+        "type": "ordinal",
+        "title": "Year"
+      },
+      {
+        "field": "status",
+        "type": "nominal",
+        "title": "Status"
+      },
+      {
+        "field": "percentage",
+        "type": "quantitative",
+        "title": "Percentage",
+        "format": ".1f"
+      }
+    ]
+  }
+}

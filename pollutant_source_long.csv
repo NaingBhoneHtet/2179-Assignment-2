@@ -1,0 +1,16 @@
+source,pollutant,tons_per_day
+Manufacturing industries,BOD,61.92
+Agriculture-based industries,BOD,27.45
+Wet markets,BOD,6.0
+Sewage treatment systems,BOD,343.45
+Pig farming,BOD,228.53
+Manufacturing industries,SS,55.82
+Agriculture-based industries,SS,50.08
+Wet markets,SS,7.75
+Sewage treatment systems,SS,326.89
+Pig farming,SS,474.54
+Manufacturing industries,NH3N,19.5
+Agriculture-based industries,NH3N,25.5
+Wet markets,NH3N,0.33
+Sewage treatment systems,NH3N,174.15
+Pig farming,NH3N,28.13

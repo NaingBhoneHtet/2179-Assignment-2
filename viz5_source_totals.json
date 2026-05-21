@@ -1,0 +1,62 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Sewage & Pig Farming Dominate Pollution",
+  "description": "Total pollutant contribution by source (% of all pollution)",
+  "width": 600,
+  "height": 300,
+  "data": {
+    "url": "source_totals.csv"
+  },
+  "mark": {
+    "type": "bar",
+    "tooltip": true
+  },
+  "encoding": {
+    "x": {
+      "field": "source",
+      "type": "nominal",
+      "sort": "-y",
+      "title": "Pollution Source",
+      "axis": {
+        "labelAngle": -25
+      }
+    },
+    "y": {
+      "field": "total_tons",
+      "type": "quantitative",
+      "title": "Total Tons per Day"
+    },
+    "color": {
+      "field": "source",
+      "type": "nominal",
+      "legend": null,
+      "scale": {
+        "range": [
+          "#c0392b",
+          "#e67e22",
+          "#f39c12",
+          "#27ae60",
+          "#2980b9"
+        ]
+      }
+    },
+    "tooltip": [
+      {
+        "field": "source",
+        "type": "nominal"
+      },
+      {
+        "field": "total_tons",
+        "type": "quantitative",
+        "format": ".1f",
+        "title": "Total Tons/Day"
+      },
+      {
+        "field": "total_pct",
+        "type": "quantitative",
+        "format": ".1f",
+        "title": "% of Total"
+      }
+    ]
+  }
+}

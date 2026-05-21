@@ -1,0 +1,79 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "2022: Still Not Fully Clean - The NH3N Gap",
+  "description": "Clean vs not-clean percentages by parameter in 2022",
+  "width": 350,
+  "height": 250,
+  "data": {
+    "url": "param_2022_diverging.csv"
+  },
+  "transform": [
+    {
+      "fold": [
+        "Clean",
+        "not_clean"
+      ],
+      "as": [
+        "status",
+        "percentage"
+      ]
+    }
+  ],
+  "mark": {
+    "type": "bar",
+    "tooltip": true
+  },
+  "encoding": {
+    "y": {
+      "field": "parameter",
+      "type": "nominal",
+      "title": "Parameter",
+      "sort": [
+        "BOD",
+        "SS",
+        "NH3N"
+      ]
+    },
+    "x": {
+      "field": "percentage",
+      "type": "quantitative",
+      "title": "Percentage (%)",
+      "scale": {
+        "domain": [
+          0,
+          100
+        ]
+      }
+    },
+    "color": {
+      "field": "status",
+      "type": "nominal",
+      "title": "Status",
+      "scale": {
+        "domain": [
+          "Clean",
+          "not_clean"
+        ],
+        "range": [
+          "#27ae60",
+          "#e74c3c"
+        ]
+      }
+    },
+    "tooltip": [
+      {
+        "field": "parameter",
+        "type": "nominal"
+      },
+      {
+        "field": "status",
+        "type": "nominal"
+      },
+      {
+        "field": "percentage",
+        "type": "quantitative",
+        "format": ".1f"
+      }
+    ]
+  }
+}

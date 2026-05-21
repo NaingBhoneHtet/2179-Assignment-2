@@ -1,0 +1,46 @@
+year,parameter,status,percentage
+2018,BOD,Clean,16
+2019,BOD,Clean,16
+2020,BOD,Clean,53
+2021,BOD,Clean,78
+2022,BOD,Clean,78
+2018,SS,Clean,55
+2019,SS,Clean,62
+2020,SS,Clean,63
+2021,SS,Clean,77
+2022,SS,Clean,76
+2018,NH3N,Clean,30
+2019,NH3N,Clean,34
+2020,NH3N,Clean,38
+2021,NH3N,Clean,51
+2022,NH3N,Clean,47
+2018,BOD,Slightly Polluted,45
+2019,BOD,Slightly Polluted,44
+2020,BOD,Slightly Polluted,34
+2021,BOD,Slightly Polluted,13
+2022,BOD,Slightly Polluted,11
+2018,SS,Slightly Polluted,12
+2019,SS,Slightly Polluted,12
+2020,SS,Slightly Polluted,11
+2021,SS,Slightly Polluted,9
+2022,SS,Slightly Polluted,9
+2018,NH3N,Slightly Polluted,33
+2019,NH3N,Slightly Polluted,28
+2020,NH3N,Slightly Polluted,32
+2021,NH3N,Slightly Polluted,20
+2022,NH3N,Slightly Polluted,24
+2018,BOD,Polluted,39
+2019,BOD,Polluted,40
+2020,BOD,Polluted,13
+2021,BOD,Polluted,9
+2022,BOD,Polluted,11
+2018,SS,Polluted,33
+2019,SS,Polluted,26
+2020,SS,Polluted,26
+2021,SS,Polluted,14
+2022,SS,Polluted,15
+2018,NH3N,Polluted,37
+2019,NH3N,Polluted,38
+2020,NH3N,Polluted,30
+2021,NH3N,Polluted,29
+2022,NH3N,Polluted,29

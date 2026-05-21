@@ -1,0 +1,16 @@
+year,total_stations,status,percentage
+2018,638,Clean,56
+2019,672,Clean,61
+2020,672,Clean,66
+2021,670,Clean,73
+2022,672,Clean,74
+2018,638,Slightly Polluted,36
+2019,672,Slightly Polluted,31
+2020,672,Slightly Polluted,29
+2021,670,Slightly Polluted,24
+2022,672,Slightly Polluted,22
+2018,638,Polluted,8
+2019,672,Polluted,9
+2020,672,Polluted,5
+2021,670,Polluted,3
+2022,672,Polluted,4

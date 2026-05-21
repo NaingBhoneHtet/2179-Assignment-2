@@ -1,0 +1,77 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Pollution Intensity Heatmap: When Was It Worst?",
+  "description": "Percentage of polluted basins by parameter and year",
+  "width": 600,
+  "height": 400,
+  "data": {
+    "url": "basin_polluted_heatmap.csv"
+  },
+  "transform": [
+    {
+      "fold": [
+        "bod5",
+        "ss",
+        "nh3n"
+      ],
+      "as": [
+        "parameter",
+        "polluted_pct"
+      ]
+    }
+  ],
+  "mark": {
+    "type": "rect",
+    "tooltip": true
+  },
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "title": "Year",
+      "axis": {
+        "labelAngle": -45
+      }
+    },
+    "y": {
+      "field": "parameter",
+      "type": "nominal",
+      "title": "Parameter",
+      "sort": [
+        "bod5",
+        "ss",
+        "nh3n"
+      ]
+    },
+    "color": {
+      "field": "polluted_pct",
+      "type": "quantitative",
+      "title": "% Polluted",
+      "scale": {
+        "scheme": "reds",
+        "domain": [
+          0,
+          100
+        ]
+      }
+    },
+    "tooltip": [
+      {
+        "field": "year",
+        "type": "ordinal",
+        "title": "Year"
+      },
+      {
+        "field": "parameter",
+        "type": "nominal",
+        "title": "Parameter"
+      },
+      {
+        "field": "polluted_pct",
+        "type": "quantitative",
+        "format": ".1f",
+        "title": "% Polluted"
+      }
+    ]
+  }
+}
