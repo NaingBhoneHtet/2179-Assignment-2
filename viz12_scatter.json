@@ -27,7 +27,23 @@
     "color": {
       "field": "source",
       "type": "nominal",
-      "title": "Source"
+      "title": "Source",
+      "scale": {
+        "domain": [
+          "Sewage treatment systems",
+          "Pig farming",
+          "Manufacturing industries",
+          "Agriculture-based industries",
+          "Wet markets"
+        ],
+        "range": [
+          "#3498db",
+          "#8e44ad",
+          "#f39c12",
+          "#1abc9c",
+          "#27ae60"
+        ]
+      }
     },
     "tooltip": [
       {
