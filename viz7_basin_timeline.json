@@ -5,8 +5,14 @@
   "width": 600,
   "height": 350,
   "data": {
-    "url": "basin_bod_timeline.csv"
+    "url": "basin_bod_timeline_long.csv"
   },
+  "transform": [
+    {
+      "calculate": "datum.status == 'Clean' ? 1 : 2",
+      "as": "order"
+    }
+  ],
   "layer": [
     {
       "mark": {
@@ -14,7 +20,7 @@
         "line": true,
         "point": true,
         "tooltip": true,
-        "opacity": 0.6
+        "opacity": 0.7
       },
       "encoding": {
         "x": {
@@ -25,11 +31,12 @@
             "domain": [
               2000,
               2021
-            ]
+            ],
+            "nice": false
           }
         },
         "y": {
-          "field": "clean_pct",
+          "field": "percentage",
           "type": "quantitative",
           "title": "% of Basins",
           "scale": {
@@ -37,41 +44,53 @@
               0,
               100
             ]
+          },
+          "stack": "zero"
+        },
+        "color": {
+          "field": "status",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Clean",
+              "Polluted"
+            ],
+            "range": [
+              "#27ae60",
+              "#3c75e7"
+            ]
+          },
+          "title": "Status"
+        },
+        "order": {
+          "field": "order"
+        },
+        "tooltip": [
+          {
+            "field": "year",
+            "type": "quantitative",
+            "title": "Year"
+          },
+          {
+            "field": "status",
+            "type": "nominal"
+          },
+          {
+            "field": "percentage",
+            "type": "quantitative",
+            "format": ".1f",
+            "title": "%"
           }
-        },
-        "color": {
-          "value": "#27ae60"
-        }
-      }
-    },
-    {
-      "mark": {
-        "type": "area",
-        "line": true,
-        "point": true,
-        "tooltip": true,
-        "opacity": 0.6
-      },
-      "encoding": {
-        "x": {
-          "field": "year",
-          "type": "quantitative"
-        },
-        "y": {
-          "field": "polluted_pct",
-          "type": "quantitative"
-        },
-        "color": {
-          "value": "#e74c3c"
-        }
+        ]
       }
     },
     {
       "mark": {
         "type": "rule",
-        "color": "#95a5a6",
+        "color": "#7f8c8d",
+        "strokeWidth": 2,
         "strokeDash": [
-          4,
+          8,
           4
         ]
       },
@@ -85,7 +104,7 @@
       "mark": {
         "type": "text",
         "text": "2013: Crisis Peak",
-        "color": "#c0392b",
+        "color": "#3c75e7",
         "fontSize": 12,
         "fontWeight": "bold",
         "align": "left",

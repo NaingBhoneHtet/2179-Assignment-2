@@ -21,11 +21,9 @@
     }
   ],
   "mark": {
-    "type": "area",
-    "line": true,
+    "type": "line",
     "point": true,
-    "tooltip": true,
-    "opacity": 0.7
+    "strokeWidth": 3
   },
   "encoding": {
     "x": {
@@ -48,7 +46,8 @@
           0,
           100
         ]
-      }
+      },
+      "stack": null
     },
     "color": {
       "field": "parameter",

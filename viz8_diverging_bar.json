@@ -2,8 +2,8 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": "2022: Still Not Fully Clean - The NH3N Gap",
   "description": "Clean vs not-clean percentages by parameter in 2022",
-  "width": 350,
-  "height": 250,
+  "width": 450,
+  "height": 350,
   "data": {
     "url": "param_2022_diverging.csv"
   },
@@ -56,7 +56,7 @@
         ],
         "range": [
           "#27ae60",
-          "#e74c3c"
+          "#3c75e7"
         ]
       }
     },

@@ -28,7 +28,8 @@
             "domain": [
               2000,
               2021
-            ]
+            ],
+            "nice": false
           }
         },
         "y": {
@@ -56,14 +57,17 @@
       "encoding": {
         "x": {
           "field": "year",
-          "type": "quantitative"
+          "type": "quantitative",
+          "scale": {
+            "nice": false
+          }
         },
         "y": {
           "field": "polluted",
           "type": "quantitative"
         },
         "color": {
-          "value": "#c0392b"
+          "value": "#2523c0"
         }
       }
     },
@@ -80,7 +84,10 @@
       "encoding": {
         "x": {
           "field": "year",
-          "type": "quantitative"
+          "type": "quantitative",
+          "scale": {
+            "nice": false
+          }
         },
         "y": {
           "field": "slightly_polluted",
@@ -94,7 +101,7 @@
     {
       "mark": {
         "type": "rule",
-        "color": "#e74c3c",
+        "color": "#2523c0",
         "strokeWidth": 2,
         "strokeDash": [
           8,
@@ -103,7 +110,8 @@
       },
       "encoding": {
         "x": {
-          "datum": 2013
+          "datum": 2013,
+          "scale": {}
         }
       }
     },
@@ -111,7 +119,7 @@
       "mark": {
         "type": "text",
         "text": "Crisis Peak: 0% Clean",
-        "color": "#c0392b",
+        "color": "#2d2bc0",
         "fontSize": 12,
         "fontWeight": "bold",
         "align": "left",
@@ -119,7 +127,8 @@
       },
       "encoding": {
         "x": {
-          "datum": 2013
+          "datum": 2013,
+          "scale": {}
         },
         "y": {
           "datum": 10
